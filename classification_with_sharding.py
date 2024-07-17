@@ -17,7 +17,7 @@ from jax.sharding import PositionalSharding
 from jax.experimental import mesh_utils
 
 
-class Regression:
+class Classification:
     def __init__(self, learning_rate: float = 0.03, epochs: int = 10000, regularization_strength: float = 0.1,
                  data_regularization=True) -> None:
         """
@@ -161,6 +161,6 @@ X, y = mnist["data"], mnist["target"]
 X = X / 255.0  # Normalize pixel values
 
 x, y = jnp.array(X), jax.nn.one_hot(jnp.array(y.astype(int)), 10)
-reg = Regression()
+reg = Classification()
 reg.fit(x, y)
 print(sklearn.metrics.r2_score(y.flatten(), reg.predict(x).flatten()))
