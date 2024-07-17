@@ -153,7 +153,7 @@ class Classification:
         - X_test: Test input features as a numpy array.
         - y_test: Test target variable as a numpy array.
         """
-        print(metrics.r2_score(y_true, y_pred))
+        print(metrics.accuracy(y_true, y_pred))
 
 
 mnist = fetch_openml('mnist_784', version=1)
@@ -163,4 +163,3 @@ X = X / 255.0  # Normalize pixel values
 x, y = jnp.array(X), jax.nn.one_hot(jnp.array(y.astype(int)), 10)
 reg = Classification()
 reg.fit(x, y)
-print(sklearn.metrics.r2_score(y.flatten(), reg.predict(x).flatten()))
