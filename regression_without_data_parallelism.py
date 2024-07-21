@@ -1,3 +1,20 @@
+
+from functools import partial
+
+import jax.numpy as jnp
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from matplotlib import pyplot as plt
+from tqdm import tqdm as tqdm
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error
+import tensorflow as tf
+from typing import Union
+import sklearn.metrics as metrics
+import jax
+import optax
+
 class LinearRegression:
     def __init__(self, learning_rate: float = 0.03, epochs: int = 10000, regularization_strength: float = 0.1,
                  data_regularization=True) -> None:
@@ -133,3 +150,12 @@ class LinearRegression:
         - y_test: Test target variable as a numpy array.
         """
         return(metrics.r2_score(y_true, y_pred))
+    
+from sklearn.datasets import _samples_generator
+
+x, y = _samples_generator.make_regression(n_samples=5000, n_features=30, noise=0.1, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+model = LinearRegression(learning_rate=0.03, epochs=10000, regularization_strength=0.1)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+print(model.evaluate(y_test, y_pred))
